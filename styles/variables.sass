@@ -1,0 +1,56 @@
+@import '../node_modules/font-awesome/css/font-awesome.min'
+@import '../node_modules/normalize-css/normalize'
+@import url(//fonts.googleapis.com/css?family=Open+Sans)
+
+$lightGray: #f8f9f9
+$darkGray:	#333
+$sandybrown: sandybrown
+
+
+
+
+/***** Presets *****/
+.clearfix:before,
+.clearfix:after
+	content: " "
+	display: table
+
+.clearfix:after,
+.clearline
+	clear: both
+
+.left
+	float: left
+
+.right
+	float: right
+
+.text-right
+	text-align: right
+
+.text-left
+	text-align: left
+
+.text-center
+	text-align: center
+
+.underlined
+    text-decoration: underline
+
+.upper
+    text-transform: uppercase
+
+.relative
+    position: relative
+
+.container
+	max-width: 960px
+	min-width: 304px
+	margin: 0 auto
+	@extend .clearfix
+
+//---------------------------------------------
+.error
+	color: red
+	font-size: 0.75em
+	font-weight: bold

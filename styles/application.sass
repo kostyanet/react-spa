@@ -1,0 +1,49 @@
+@import 'variables'
+
+body,
+html
+	background: #fff
+	font-family: 'Open Sans', sans-serif !important
+
+//----------------------------------
+.PrimaryLayout
+	min-height: 50vw
+	min-width: 100%
+
+//----------------------------------
+.LoginPage
+	@extend .text-center
+	color: $darkGray
+	width: 320px
+	box-sizing: border-box
+	margin: 0 auto
+	padding: 2em 50px
+	background-color: $lightGray
+	& button
+		margin: 25px 0 20px
+    
+//----------------------------------
+.FormInput
+	@extend .text-left
+	& div
+		color: red
+		font-size: 0.75em
+		font-weight: bold
+		height: 22px
+		width: 200px
+	& input
+		height: 25px
+		display: block
+		width: 200px
+		margin-bottom: 15px
+		padding-left: 0.75em
+	&.error input
+		border-color: red
+
+.FormInput.error
+    & input:focus
+            outline: none
+
+//----------------------------------
+.Button
+    min-width: 70px

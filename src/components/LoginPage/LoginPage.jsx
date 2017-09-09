@@ -16,15 +16,15 @@ export default class LoginPage extends Component {
 
 
   handleChange = e => {
-    let tg      = e.target;
-    let value   = tg.value;
+    let target  = e.target;
+    let value   = target.value;
     let state   = this.props.appState.LoginPage;
 
-    let obj = (tg.type === 'text')
+    let obj = (target.type === 'text')
       ? {nameValue: value}
       : {passValue: value}
 
-    this._set(obj, {status: 'touched'})
+    this._set(obj, {status: 'touched'});
   };
 
 

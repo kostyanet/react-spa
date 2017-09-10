@@ -1,10 +1,7 @@
 // State definitions of the components go first:
 const LoginPage = {
-    nameMsg:    '',
-    nameValue:  '',
-    passMsg:    '',
-    passValue:  '',
-    status:     'init'
+    user:           null,
+    redirectUrl:    null
 };
 
 // Then they merge into one

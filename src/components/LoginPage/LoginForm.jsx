@@ -16,7 +16,7 @@ const LoginForm = props =>
             <Button { ...props.buttonProps} />
         </form>
 
-    </div>
+    </div>;
 
 
 export default LoginForm;

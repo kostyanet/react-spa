@@ -18,35 +18,35 @@ app.set('port', 3000);
 app.use(logger(':method :url :status :response-time ms - :date[web]'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 app.use(express.static(__dirname));
 app.use(require('webpack-dev-middleware')(compiler, {
-  publicPath: config.output.publicPath
+    publicPath: config.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
-  // res.sendFile(path.join(__dirname, '/node_modules/bootstrap/dist/css/bootstrap.min.css'));
-  // res.sendFile(path.join(__dirname, '/static/style.css'));
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'index.html'));
+    // res.sendFile(path.join(__dirname, '/node_modules/bootstrap/dist/css/bootstrap.min.css'));
+    // res.sendFile(path.join(__dirname, '/static/style.css'));
 
-  // res.sendFile(path.join(__dirname, '/styles/application.css'));
-  // res.sendFile(path.join(__dirname, '/assets/**/*'));
-  // res.sendFile(path.join(__dirname, '/fonts/**/*'));
+    // res.sendFile(path.join(__dirname, '/styles/application.css'));
+    // res.sendFile(path.join(__dirname, '/assets/**/*'));
+    // res.sendFile(path.join(__dirname, '/fonts/**/*'));
 });
 app.use(errorHandler());
 
 /* POST handler */
-app.post('/login', function(req, res, next) {
+app.post('/login', function (req, res, next) {
     var name = req.body.username;
     var pass = req.body.password;
 
     var msg;
-    var obj  = {
-        "Auth": "Logged",
-        "Language": "EN"
+    var obj = {
+        login:  name,
+        token:  Math.random().toString(16).substring(2) + '=='
     };
 
     console.log('User: ' + name + '\n' + 'Pass: ' + pass);
@@ -65,26 +65,25 @@ app.post('/login', function(req, res, next) {
     }
 
     obj = {
-      error:        msg,
-      statusText:   msg
+        error: msg,
+        statusText: msg
     };
 
     replyWith(res, obj, 401);
 });
 
-app.listen(3000, function(err) {
-  if (err) {
-    return console.error(err);
-  }
+app.listen(3000, function (err) {
+    if (err) {
+        return console.error(err);
+    }
 
-  console.log('Listening at http://localhost:3000/');
+    console.log('Listening at http://localhost:3000/');
 });
-
 
 
 /* Sends the delayed response */
 function replyWith(res, obj, status) {
-    setTimeout(function() {
+    setTimeout(function () {
         res
             .set({
                 'Content-Type': 'application/json; charset=utf-8',

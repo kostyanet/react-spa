@@ -9,11 +9,11 @@ const App = (props) => (
     <BrowserRouter>
         <PrimaryLayout {...props} />
     </BrowserRouter>
-)
+);
 
-const HomePage = () => <div>Home Page</div>
-const UsersPage = () => <div>Users Page</div>
-const UsersMenu = () => <div>Users Menu</div>
+const HomePage = () => <div>Home Page</div>;
+const UsersPage = () => <div>Users Page</div>;
+const UsersMenu = () => <div>Users Menu</div>;
 
 const PrimaryLayout = (props) => (
     <div className="PrimaryLayout">
@@ -36,6 +36,6 @@ const PrimaryLayout = (props) => (
             <LoginContainer {...props} />
         </main>
     </div>
-)
+);
 
 export default App;

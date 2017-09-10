@@ -14,13 +14,13 @@ const Button = props =>
 				: <span>{props.title}</span>
 		}
 
-	</button>
+	</button>;
 
 Button.propTypes = {
   	handleClick: 	PropTypes.func,
   	title: 			PropTypes.string,
 	className: 		PropTypes.string,
-  	disabled: 		PropTypes.any,
+  	disabled: 		PropTypes.any
 };
 
 Button.defaultProps = {

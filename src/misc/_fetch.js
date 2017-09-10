@@ -1,7 +1,7 @@
 export default function _fetch(credsObj, url) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        
+
         xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 

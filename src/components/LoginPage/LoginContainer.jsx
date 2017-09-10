@@ -12,6 +12,7 @@ class LoginContainer extends Component {
         super(props);
 
         this.state = {
+            checkboxElement: null,
             nameMsg: '',
             nameValue: '',
             passMsg: '',
@@ -49,7 +50,7 @@ class LoginContainer extends Component {
     };
 
 
-    onSuccess(response) {
+    onSuccess(response) { debugger
         console.log('Successfully logged.');
 
         this.props.setAppState({
@@ -94,13 +95,21 @@ class LoginContainer extends Component {
             type:           'password',
             value:          s.passValue
         };
+        const checkboxProps = {
+            checkboxRef:    el => this.checkboxRef = el,
+            text:           'Keep me logged'
+        };
         const buttonProps = {
             disabled:       s.isLoading,
             handleClick:    this.handleSubmit,
             title:          'Login'
         };
 
-        return <LoginForm nameProps={nameProps} passProps={passProps} buttonProps={buttonProps}/>
+        return <LoginForm
+            nameProps={nameProps}
+            passProps={passProps}
+            checkboxProps={checkboxProps}
+            buttonProps={buttonProps} />
     }
 }
 

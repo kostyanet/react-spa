@@ -1,6 +1,7 @@
 import React        from 'react';
 
 import Button       from '../common/Button.jsx';
+import Checkbox     from '../common/Checkbox.jsx';
 import FormInput    from '../common/FormInput.jsx';
 
 
@@ -13,6 +14,7 @@ const LoginForm = props =>
             <FormInput { ...props.nameProps} />
             <FormInput { ...props.passProps} />
 
+            <Checkbox { ...props.checkboxProps} />
             <Button { ...props.buttonProps} />
         </form>
 

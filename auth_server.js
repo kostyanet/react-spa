@@ -39,7 +39,7 @@ app.get('*', function (req, res) {
 app.use(errorHandler());
 
 /* POST handler */
-app.post('/login', function (req, res, next) {
+app.post('/logi-n', function (req, res, next) {
     var name = req.body.username;
     var pass = req.body.password;
 
@@ -54,6 +54,7 @@ app.post('/login', function (req, res, next) {
 
     /* Checking the credentials */
     if (name === 'User' && pass === 'Pass1') {
+        //res.body = obj;
         replyWith(res, obj, 200);
         return;
 

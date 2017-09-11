@@ -1,9 +1,9 @@
 import React, {Component}   from 'react';
+import axios                from 'axios';
 import {withRouter}         from 'react-router-dom'
 
 import AppValues            from '../../misc/app.values.js';
 import LoginForm            from './LoginForm.jsx';
-import _fetch               from '../../misc/_fetch.js';
 
 
 class LoginContainer extends Component {
@@ -12,37 +12,44 @@ class LoginContainer extends Component {
         super(props);
 
         this.state = {
-            checkboxElement: null,
-            nameMsg: '',
-            nameValue: '',
-            passMsg: '',
-            passValue: '',
-            isLoading: false
+            checkboxElement:    null,
+            nameMsg:            '',
+            nameValue:          '',
+            passMsg:            '',
+            passValue:          '',
+            isLoading:          false
         };
     }
 
 
     handleChange = e => {
         let target = e.target;
-        let value = target.value;
+        let value  = target.value;
 
         let obj = (target.type === 'text')
             ? {nameValue: value}
             : {passValue: value};
 
-        this.setState(obj);
+        this.setState(Object.assign({
+            nameMsg:    '',
+            passMsg:    ''
+        }, obj));
     };
 
 
     handleSubmit = e => {
         e.preventDefault();
 
-        const creds = JSON.stringify({
+        let creds = {
             username: this.state.nameValue,
             password: this.state.passValue
-        });
+        };
 
-        _fetch(creds, AppValues.BASE_URL + '/login')
+        axios({
+            method: 'post',
+            url:    AppValues.BASE_URL + '/login',
+            data:   creds
+        })
             .then(this.onSuccess.bind(this))
             .catch(this.onError.bind(this));
 
@@ -50,11 +57,11 @@ class LoginContainer extends Component {
     };
 
 
-    onSuccess(response) { debugger
+    onSuccess(response) {
         console.log('Successfully logged.');
 
         this.props.setAppState({
-            LoginPage:  {user: JSON.parse(response)}
+            LoginPage:  {user: response.data}
         });
 
         this.setState({isLoading: false});
@@ -66,14 +73,15 @@ class LoginContainer extends Component {
 
 
     onError(err) {
-        let msg = err.statusText;
-        console.error(`Login error: ${err.code} - ${msg}`);
+        let res = err.response;
+        let msg = res.data.error;
+        console.error(`Login error: ${res.status} - ${res.statusText} - ${msg}`);
 
         let obj = (/password/i.test(msg))
             ? {passMsg: msg, nameMsg: ''}
             : {nameMsg: msg, passMsg: ''};
 
-        this.setState(Object.assign(obj, {isLoading: false}));
+        this.setState(Object.assign({isLoading: false}, obj));
     }
 
 

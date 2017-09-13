@@ -1,8 +1,15 @@
 import React, {Component}   from 'react';
+
+import { AppStateService }  from '../../services/app-state.service.js';
 import INIT_APP_STATE       from './InitAppState.js';
 
 export default class AppState extends Component {
-    state = INIT_APP_STATE;
+    constructor(props) {
+        super(props);
+
+        this.state = INIT_APP_STATE;
+        AppStateService.deliver(this.setAppState.bind(this));
+    }
 
     setAppState = (updater, callback) => {
         this.setState(updater, () => {

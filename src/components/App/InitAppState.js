@@ -1,7 +1,7 @@
 // State definitions of the components go first:
 const LoginPage = {
     user:           null,
-    redirectUrl:    null
+    redirectUrl:    'opa'
 };
 
 // Then they merge into one

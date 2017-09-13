@@ -1,47 +1,70 @@
 // Authorization service
-// Makes POST to log in, saves into LocalStorage
+// Makes POST request to log in, sets AppState, saves into LocalStorage
 
+import axios                from 'axios';
+import {withRouter}         from 'react-router-dom'
+
+import { AppStateService }  from './app-state.service.js';
+import AppValues            from '../misc/app.values.js';
 
 
 class AuthService {
-    constructor(url) {
-        this.url = url;
+    constructor() {
+
         if (!AuthService.instance) {
-            this._data = { isLogged: false };
+            this._data = { user: {} };
+
             AuthService.instance = this;
         }
 
         return AuthService.instance;
     }
 
-    // the getter&setter
-    // allow the components to interact via LoginService
-    get isLogged() {
-        return this._data.isLogged;
-    }
 
-    set isLogged(value) {
-        this._data.isLogged = value;
+    get user() {
+        return this._data.user;
     }
 
 
-    login(credsObj) {
-        const query = [JSON.stringify(credsObj), this.url];
-        return _fetch(...query)
-            // parsing & analyzing the server's response
-            .then(response => JSON.parse(response))
+    login(creds, keepLogged) {
+
+        return axios({
+            method: 'post',
+            url:    AppValues.BASE_URL + '/login',
+            data:   creds
+        })
             .then(data => {
-                console.log(data);
-                this.isLogged =  (data['Auth'] == 'Logged')
-                return this.isLogged; // setting the logged state
+                AppStateService.setAppState({
+                    LoginPage:  {user: data.data}
+                });
+
+                // todo: Save into LocalStore
+
+                console.log('AuthService: successfully logged.');
+                return data.data;
             })
-            .catch(err => { throw new Error(err.status + ': ' + err.message) });
+
+            .catch(data => { debugger
+                if (!data.response) {
+                    console.error(`AuthService: ${data.stack}`);
+                    return data.message;
+                }
+
+                let res = data.response;
+                let err = res.data.error;
+
+                console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
+
+                throw new Error(err);
+                //return err;
+            });
     }
+
 }
 
-const url = 'http://localhost:3000/login';
 // manipulations for the singleton and its safety
-const instance = new AuthService(url);
+const instance = new AuthService();
 Object.freeze(instance);
+
 
 export default instance;

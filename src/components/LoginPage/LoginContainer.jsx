@@ -3,6 +3,7 @@ import axios                from 'axios';
 import {withRouter}         from 'react-router-dom'
 
 import AppValues            from '../../misc/app.values.js';
+import AuthService          from '../../services/auth.service.js';
 import LoginForm            from './LoginForm.jsx';
 
 
@@ -41,41 +42,29 @@ class LoginContainer extends Component {
         e.preventDefault();
 
         let creds = {
-            username: this.state.nameValue,
-            password: this.state.passValue
+            username: this.state.nameValue.trim(),
+            password: this.state.passValue.trim()
         };
 
-        axios({
-            method: 'post',
-            url:    AppValues.BASE_URL + '/login',
-            data:   creds
-        })
-            .then(this.onSuccess.bind(this))
-            .catch(this.onError.bind(this));
+        AuthService.login(creds, this.checkboxRef.checked)
+            .then(response => { this.setState({isLoading: false}) })
+            .catch(err => { this.onError(err) });
 
         this.setState({isLoading: true});
     };
 
 
     onSuccess(response) {
-        console.log('Successfully logged.');
-
-        this.props.setAppState({
-            LoginPage:  {user: response.data}
-        });
-
         this.setState({isLoading: false});
 
-        setTimeout(() => {
+        setTimeout(() => { // simulates network delay
             this.props.history.push( this.props.appState.LoginPage.redirectUrl || 'users' );
         }, 1000);
     }
 
 
-    onError(err) {
-        let res = err.response;
-        let msg = res.data.error;
-        console.error(`Login error: ${res.status} - ${res.statusText} - ${msg}`);
+    onError(err) { debugger
+        let msg = err.message;
 
         let obj = (/password/i.test(msg))
             ? {passMsg: msg, nameMsg: ''}

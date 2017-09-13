@@ -39,7 +39,7 @@ app.get('*', function (req, res) {
 app.use(errorHandler());
 
 /* POST handler */
-app.post('/logi-n', function (req, res, next) {
+app.post('/login', function (req, res, next) {
     var name = req.body.username;
     var pass = req.body.password;
 

@@ -1,6 +1,4 @@
 import React, {Component}   from 'react';
-
-import { AppStateService }  from '../../services/app-state.service.js';
 import INIT_APP_STATE       from './InitAppState.js';
 
 export default class AppState extends Component {
@@ -8,7 +6,6 @@ export default class AppState extends Component {
         super(props);
 
         this.state = INIT_APP_STATE;
-        AppStateService.deliver(this.setAppState.bind(this));
     }
 
     setAppState = (updater, callback) => {

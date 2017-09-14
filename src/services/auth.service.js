@@ -1,10 +1,11 @@
 // Authorization service
-// Makes POST request to log in, sets AppState, saves into LocalStorage
+// 1) makes POST request to log in;
+// 2) saves user into the LocalStorage;
+// 3) handles http and parsing errors.
+
 
 import axios                from 'axios';
 import {withRouter}         from 'react-router-dom'
-
-import { AppStateService }  from './app-state.service.js';
 import AppValues            from '../misc/app.values.js';
 
 
@@ -12,19 +13,11 @@ class AuthService {
     constructor() {
 
         if (!AuthService.instance) {
-            this._data = { user: {} };
-
             AuthService.instance = this;
         }
 
         return AuthService.instance;
     }
-
-
-    get user() {
-        return this._data.user;
-    }
-
 
     login(creds, keepLogged) {
 
@@ -33,36 +26,33 @@ class AuthService {
             url:    AppValues.BASE_URL + '/login',
             data:   creds
         })
+
             .then(data => {
-                AppStateService.setAppState({
-                    LoginPage:  {user: data.data}
-                });
+                const user = data.data;
+                window.localStorage.setItem('user', JSON.stringify(user));
 
-                // todo: Save into LocalStore
-
-                console.log('AuthService: successfully logged.');
-                return data.data;
+                console.log('AuthService: successfully logged in.');
+                return user;
             })
 
-            .catch(data => { debugger
+            .catch(data => {
                 if (!data.response) {
                     console.error(`AuthService: ${data.stack}`);
-                    return data.message;
+                    throw new Error(`Unexpected Error: ${data.message}`);
                 }
 
-                let res = data.response;
-                let err = res.data.error;
+                const res = data.response;
+                const err = res.data.error;
 
                 console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
 
                 throw new Error(err);
-                //return err;
             });
     }
 
 }
 
-// manipulations for the singleton and its safety
+
 const instance = new AuthService();
 Object.freeze(instance);
 

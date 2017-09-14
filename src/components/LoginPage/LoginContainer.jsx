@@ -47,31 +47,36 @@ class LoginContainer extends Component {
         };
 
         AuthService.login(creds, this.checkboxRef.checked)
-            .then(response => { this.setState({isLoading: false}) })
-            .catch(err => { this.onError(err) });
+            .then(res => this.onSuccess(res))
+            .catch(err => this.onError(err));
 
         this.setState({isLoading: true});
     };
 
 
-    onSuccess(response) {
+    onSuccess = res => {
+        const p = this.props;
         this.setState({isLoading: false});
 
+        p.setAppState({
+            LoginPage:  {user: res}
+        });
+
         setTimeout(() => { // simulates network delay
-            this.props.history.push( this.props.appState.LoginPage.redirectUrl || 'users' );
+            p.history.push( p.appState.LoginPage.redirectUrl || '/users' );
         }, 1000);
-    }
+    };
 
 
-    onError(err) { debugger
-        let msg = err.message;
+    onError = err => {
+        const {message} = err;
 
-        let obj = (/password/i.test(msg))
-            ? {passMsg: msg, nameMsg: ''}
-            : {nameMsg: msg, passMsg: ''};
+        let obj = (/password/i.test(message))
+            ? {passMsg: message, nameMsg: ''}
+            : {nameMsg: message, passMsg: ''};
 
         this.setState(Object.assign({isLoading: false}, obj));
-    }
+    };
 
 
     render() {

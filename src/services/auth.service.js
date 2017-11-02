@@ -11,7 +11,6 @@ import AppValues            from '../misc/app.values.js';
 
 class AuthService {
     constructor() {
-
         if (!AuthService.instance) {
             AuthService.instance = this;
         }
@@ -19,8 +18,9 @@ class AuthService {
         return AuthService.instance;
     }
 
-    login(creds, keepLogged) {
 
+    login(creds, keepLogged) {
+g
         return axios({
             method: 'post',
             url:    AppValues.BASE_URL + '/login',

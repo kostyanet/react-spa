@@ -1,4 +1,4 @@
-// State definitions of the components go first:
+// State definitions for different components:
 const LoginPage = {
     user:           null,
     redirectUrl:    '/oops'
@@ -8,5 +8,6 @@ const LoginPage = {
 const INIT_APP_STATE = {
     LoginPage
 };
+
 
 export default INIT_APP_STATE;

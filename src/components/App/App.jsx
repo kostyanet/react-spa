@@ -25,6 +25,7 @@ const PrimaryLayout = (props) => (
                 <NavLink to="/users" activeClassName="active">Users</NavLink>
                 <NavLink to="/login" activeClassName="active">Log In</NavLink>
             </nav>
+
             <Route path="/users" component={UsersMenu}/>
         </header>
 

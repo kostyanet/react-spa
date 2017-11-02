@@ -1,8 +1,6 @@
 import React, {Component}   from 'react';
-import axios                from 'axios';
 import {withRouter}         from 'react-router-dom'
 
-import AppValues            from '../../misc/app.values.js';
 import AuthService          from '../../services/auth.service.js';
 import LoginForm            from './LoginForm.jsx';
 
@@ -25,7 +23,7 @@ class LoginContainer extends Component {
 
     handleChange = e => {
         let target = e.target;
-        let value  = target.value;
+        let value  = target.value.trim();
 
         let obj = (target.type === 'text')
             ? {nameValue: value}
@@ -42,8 +40,8 @@ class LoginContainer extends Component {
         e.preventDefault();
 
         let creds = {
-            username: this.state.nameValue.trim(),
-            password: this.state.passValue.trim()
+            username: this.state.nameValue,
+            password: this.state.passValue
         };
 
         AuthService.login(creds, this.checkboxRef.checked)

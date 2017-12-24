@@ -20,7 +20,7 @@ class AuthService {
 
 
     login(creds, keepLogged) {
-g
+
         return axios({
             method: 'post',
             url:    AppValues.BASE_URL + '/login',

@@ -1,14 +1,16 @@
-import React, {Component}    from 'react';
-import { BrowserRouter,
-    Redirect,
-    Route, NavLink }        from 'react-router-dom';
+import React                from 'react';
+import {
+    Router, Route, NavLink
+}                           from 'react-router-dom';
+import PropTypes 	        from 'prop-types';
 
 import LoginContainer        from '../LoginPage/LoginContainer.jsx';
 
+
 const App = (props) => (
-    <BrowserRouter>
+    <Router history={props.appState.history}>
         <PrimaryLayout {...props} />
-    </BrowserRouter>
+    </Router>
 );
 
 const HomePage = () => <div>Home Page</div>;
@@ -37,5 +39,10 @@ const PrimaryLayout = (props) => (
         </main>
     </div>
 );
+
+
+App.propTypes = {
+    appState: PropTypes.object
+};
 
 export default App;

@@ -1,4 +1,5 @@
 import React        from 'react';
+import PropTypes 	from 'prop-types';
 
 import Button       from '../common/Button.jsx';
 import Checkbox     from '../common/Checkbox.jsx';
@@ -20,5 +21,12 @@ const LoginForm = props =>
 
     </div>;
 
+
+LoginForm.propTypes = {
+    buttonProps:    PropTypes.object,
+    checkboxProps:  PropTypes.object,
+    nameProps:      PropTypes.object,
+    passProps:      PropTypes.object
+};
 
 export default LoginForm;

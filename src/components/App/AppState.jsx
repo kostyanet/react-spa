@@ -8,19 +8,26 @@ export default class AppState extends Component {
         super(props);
 
         this.state = INIT_APP_STATE;
-        AppStateService.deliver(this.setAppState.bind(this));
+        const self = this;
+
+        AppStateService.deliver({
+            appState:   self.state,
+            setState:   self.setAppState.bind(self)
+        });
     }
+
 
     setAppState = (updater, callback) => {
         this.setState(updater, () => {
             if (this.props.debug) {
-                console.log('setAppState', JSON.stringify(this.state));
+                console.log('setAppState: ', JSON.stringify(this.state));
             }
             if (typeof callback === 'function') {
                 callback();
             }
         });
     };
+
 
     render() {
         return (

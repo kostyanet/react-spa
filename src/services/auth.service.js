@@ -38,22 +38,26 @@ class AuthService {
                     LoginPage:  {user: data.data}
                 });
 
+
+                AppStateService.appState.history.push('/users');
+
                 // todo: Save into LocalStore
 
-                console.log('AuthService: successfully logged.');
+                window.console.log('AuthService: successfully logged.');
                 return data.data;
             })
 
             .catch(data => { debugger
                 if (!data.response) {
-                    console.error(`AuthService: ${data.stack}`);
+                    window.console.error(`AuthService: ${data.stack}`);
                     return data.message;
                 }
 
+                // todo: move to exception service
                 let res = data.response;
                 let err = res.data.error;
 
-                console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
+                window.console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
 
                 throw new Error(err);
                 //return err;

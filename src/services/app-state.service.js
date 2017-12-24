@@ -1,5 +1,6 @@
 export class AppStateService {
-    static deliver(method) {
-        this.setAppState = method;
+    static deliver(methods) {
+        this.appState       = methods.appState;
+        this.setAppState    = methods.setState;
     }
 }

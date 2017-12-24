@@ -75,29 +75,28 @@ class LoginContainer extends Component {
 
 
     render() {
-        const s = this.state;
         const nameProps = {
             handleChange:   this.handleChange,
-            message:        s.nameMsg,
+            message:        this.state.nameMsg,
             placeholder:    'Username',
             required:       true,
             type:           'text',
-            value:          s.nameValue
+            value:          this.state.nameValue
         };
         const passProps = {
             handleChange:   this.handleChange,
-            message:        s.passMsg,
+            message:        this.state.passMsg,
             placeholder:    'Password',
             required:       true,
             type:           'password',
-            value:          s.passValue
+            value:          this.state.passValue
         };
         const checkboxProps = {
             checkboxRef:    el => this.checkboxRef = el,
             text:           'Keep me logged'
         };
         const buttonProps = {
-            disabled:       s.isLoading,
+            disabled:       this.state.isLoading,
             handleClick:    this.handleSubmit,
             title:          'Login'
         };

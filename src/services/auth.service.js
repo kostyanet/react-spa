@@ -1,8 +1,9 @@
 // Authorization service
-// Makes POST request to log in, sets AppState, saves into LocalStorage
+// 1) makes POST request to log in;
+// 2) saves user into the LocalStorage;
+// 3) handles http and parsing errors.
 
 import axios                from 'axios';
-import {withRouter}         from 'react-router-dom'
 
 import { AppStateService }  from './app-state.service.js';
 import AppValues            from '../misc/app.values.js';
@@ -10,7 +11,6 @@ import AppValues            from '../misc/app.values.js';
 
 class AuthService {
     constructor() {
-
         if (!AuthService.instance) {
             this._data = { user: {} };
 
@@ -22,46 +22,50 @@ class AuthService {
 
 
     get user() {
-        return this._data.user;
+        return Object.assign({}, this._data.user);
     }
 
 
     login(creds, keepLogged) {
+        window.localStorage.removeItem('user');
 
         return axios({
             method: 'post',
             url:    AppValues.BASE_URL + '/login',
             data:   creds
         })
-            .then(data => {
-                AppStateService.setAppState({
-                    LoginPage:  {user: data.data}
-                });
+            .then(_user => this._onSuccess(_user.data, keepLogged))
+            .catch(_error => this._onError(_error));
+    }
 
 
-                AppStateService.appState.history.push('/users');
+    _onSuccess(user, keepLogged) {
+        AppStateService.setAppState({
+            LoginPage:  {user}
+        });
 
-                // todo: Save into LocalStore
+        AppStateService.appState.history.push('/users');
 
-                window.console.log('AuthService: successfully logged.');
-                return data.data;
-            })
+        keepLogged && window.localStorage.setItem('user', JSON.stringify(user));
+        window.console.log('AuthService: successfully logged.');
 
-            .catch(data => { debugger
-                if (!data.response) {
-                    window.console.error(`AuthService: ${data.stack}`);
-                    return data.message;
-                }
+        return user;
+    }
 
-                // todo: move to exception service
-                let res = data.response;
-                let err = res.data.error;
 
-                window.console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
+    _onError(error) {
+        if (!error.response) {
+            window.console.error(`AuthService: ${error.stack}`);
+            return error.message;
+        }
 
-                throw new Error(err);
-                //return err;
-            });
+        // todo: move to exception service
+        let res = error.response;
+        let err = res.data.error;
+
+        window.console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
+
+        throw new Error(err);
     }
 
 }

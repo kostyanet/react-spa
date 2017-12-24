@@ -11,7 +11,7 @@ export default class AppState extends Component {
         const self = this;
 
         AppStateService.deliver({
-            appState:   self.state,
+            get appState() { return Object.assign({}, self.state); },
             setState:   self.setAppState.bind(self)
         });
     }

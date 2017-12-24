@@ -1,8 +1,5 @@
 import React, {Component}   from 'react';
-import axios                from 'axios';
-import {withRouter}         from 'react-router-dom'
 
-import AppValues            from '../../misc/app.values.js';
 import AuthService          from '../../services/auth.service.js';
 import LoginForm            from './LoginForm.jsx';
 
@@ -23,13 +20,10 @@ class LoginContainer extends Component {
     }
 
 
-    handleChange = e => {
-        let target = e.target;
-        let value  = target.value;
-
-        let obj = (target.type === 'text')
-            ? {nameValue: value}
-            : {passValue: value};
+    handleChange = event => {
+        let obj = (event.target.type === 'text')
+            ? {nameValue: event.target.value}
+            : {passValue: event.target.value};
 
         this.setState(Object.assign({
             nameMsg:    '',
@@ -38,8 +32,8 @@ class LoginContainer extends Component {
     };
 
 
-    handleSubmit = e => {
-        e.preventDefault();
+    handleSubmit = event => {
+        event.preventDefault();
 
         let creds = {
             username: this.state.nameValue.trim(),
@@ -47,30 +41,20 @@ class LoginContainer extends Component {
         };
 
         AuthService.login(creds, this.checkboxRef.checked)
-            .then(response => { this.setState({isLoading: false}) })
-            .catch(err => { this.onError(err) });
+            .catch(err => this.onError(err))
+            // todo remove later
+            .finally(() => setTimeout(() => this.setState({isLoading: false}), 1000));
 
         this.setState({isLoading: true});
     };
 
 
-    onSuccess(response) {
-        this.setState({isLoading: false});
+    onError(err) {
+        let obj = (/password/i.test(err.message))
+            ? {passMsg: err.message, nameMsg: ''}
+            : {nameMsg: err.message, passMsg: ''};
 
-        setTimeout(() => { // simulates network delay
-            this.props.history.push( this.props.appState.LoginPage.redirectUrl || 'users' );
-        }, 1000);
-    }
-
-
-    onError(err) { debugger
-        let msg = err.message;
-
-        let obj = (/password/i.test(msg))
-            ? {passMsg: msg, nameMsg: ''}
-            : {nameMsg: msg, passMsg: ''};
-
-        this.setState(Object.assign({isLoading: false}, obj));
+        this.setState(obj);
     }
 
 
@@ -109,4 +93,4 @@ class LoginContainer extends Component {
     }
 }
 
-export default withRouter(LoginContainer);
+export default LoginContainer;

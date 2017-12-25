@@ -5,7 +5,7 @@
 
 import axios                from 'axios';
 
-import { AppStateService }  from './app-state.service.js';
+import AppStateService      from './app-state.service.js';
 import AppValues            from '../misc/app.values.js';
 
 
@@ -29,6 +29,13 @@ class AuthService {
     login(creds, keepLogged) {
         window.localStorage.removeItem('user');
 
+        AppStateService.mergeAppState({
+            view:   {
+                LoginPage: {state: 'pending'}
+            },
+            model:  {user: null}
+        });
+
         return axios({
             method: 'post',
             url:    AppValues.BASE_URL + '/login',
@@ -40,8 +47,11 @@ class AuthService {
 
 
     _onSuccess(user, keepLogged) {
-        AppStateService.setAppState({
-            LoginPage:  {user}
+        AppStateService.mergeAppState({
+            view:   {
+                LoginPage: {state: 'authorized'}
+            },
+            model:  {user}
         });
 
         AppStateService.appState.history.push('/users');
@@ -59,12 +69,18 @@ class AuthService {
             return error.message;
         }
 
+        AppStateService.mergeAppState({
+            view:   {
+                LoginPage: {state: 'rejected'}
+            },
+            model:  {user: null}
+        });
+
         // todo: move to exception service
         let res = error.response;
         let err = res.data.error;
 
         window.console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
-
         throw new Error(err);
     }
 

@@ -1,19 +1,15 @@
 import React, {Component}   from 'react';
 
-import { AppStateService }  from '../../services/app-state.service.js';
-import INIT_APP_STATE       from './InitAppState.js';
+import AppStateService      from '../../services/app-state.service.js';
 
 export default class AppState extends Component {
-    constructor(props) {
+    constructor(props, AppStateService) {
         super(props);
+    }
 
-        this.state = INIT_APP_STATE;
-        const self = this;
 
-        AppStateService.deliver({
-            get appState() { return Object.assign({}, self.state); },
-            setState:   self.setAppState.bind(self)
-        });
+    componentWillMount() {
+        AppStateService.subscribe(this.setAppState);
     }
 
 

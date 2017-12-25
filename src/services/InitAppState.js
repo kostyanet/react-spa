@@ -1,14 +1,15 @@
 import createBrowserHistory from 'history/createBrowserHistory'
 
 // State definitions of the components go first:
-const LoginPage = {
-    user:           null,
-    redirectUrl:    'opa'
-};
+// const LoginPage = {
+//     user:           null,
+//     redirectUrl:    'opa'
+// };
 
 // Then they merge into one
 const INIT_APP_STATE = {
-    LoginPage,
+    model:      null,
+    view:       null,
     history:    createBrowserHistory()
 };
 

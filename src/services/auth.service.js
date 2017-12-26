@@ -54,7 +54,7 @@ class AuthService {
             model:  {user}
         });
 
-        AppStateService.appState.history.push('/users');
+        AppStateService.appState.history.push('/protected');
 
         keepLogged && window.localStorage.setItem('user', JSON.stringify(user));
         window.console.log('AuthService: successfully logged.');
@@ -86,7 +86,6 @@ class AuthService {
 
 }
 
-// manipulations for the singleton and its safety
 const instance = new AuthService();
 Object.freeze(instance);
 

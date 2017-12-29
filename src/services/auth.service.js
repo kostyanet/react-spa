@@ -13,7 +13,6 @@ class AuthService {
     constructor() {
         if (!AuthService.instance) {
             this._data = { user: {} };
-
             AuthService.instance = this;
         }
 
@@ -54,7 +53,7 @@ class AuthService {
             model:  {user}
         });
 
-        AppStateService.appState.history.push('/protected');
+        AppStateService.appHistory.push('/protected');
 
         keepLogged && window.localStorage.setItem('user', JSON.stringify(user));
         window.console.log('AuthService: successfully logged.');

@@ -4,17 +4,20 @@ import {
 }                           from 'react-router-dom';
 import PropTypes 	        from 'prop-types';
 
+import AppStateService      from '../../services/app-state.service.js';
 import LoginContainer       from '../LoginPage/LoginContainer.jsx';
-import PrivateRoute         from './PrivateRoute.jsx';
+// import PrivateRoute         from './PrivateRoute.jsx';
+import UsersPage            from '../LoginPage/UsersPage.jsx';
 
-const App = (props) => (
-    <Router history={props.appState.history}>
-        <PrimaryLayout {...props} />
+const App = () => (
+    <Router history={AppStateService.appHistory}>
+        <PrimaryLayout />
     </Router>
 );
 
-const HomePage = () => <div>Home Page</div>;
-const ProtectedPage = () => <div>Protected content</div>;
+
+const HomePage = (props) => <div>Home Page <br/>{JSON.stringify(props)}</div>;
+// const ProtectedPage = () => <div>Protected content</div>;
 const UsersMenu = () => <div>Users Menu</div>;
 
 const PrimaryLayout = (props) => (
@@ -24,6 +27,7 @@ const PrimaryLayout = (props) => (
 
             <nav className="nav-bar">
                 <NavLink to="/" exact activeClassName="active">Public</NavLink>
+                <NavLink to="/users" activeClassName="active">Users</NavLink>
                 <NavLink to="/protected" activeClassName="active">Protected</NavLink>
                 <NavLink to="/login" activeClassName="active">Log In</NavLink>
             </nav>
@@ -32,9 +36,10 @@ const PrimaryLayout = (props) => (
 
         <main>
             <Route path="/" exact component={HomePage}/>
-            {/*<Route path="/users" component={UsersPage}/>*/}
+            <Route path="/users" component={UsersPage}/>
             <Route path="/login" component={LoginContainer}/>
-            <PrivateRoute path="/protected" component={ProtectedPage}/>{/*<Redirect to="/auth" />*/}
+            {/*<PrivateRoute path="/protected" component={ProtectedPage}/>*/}
+            {/*<Redirect to="/auth" />*/}
             {/*<LoginContainer {...props} />*/}
         </main>
     </div>

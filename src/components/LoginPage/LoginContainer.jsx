@@ -42,8 +42,8 @@ class LoginContainer extends Component {
 
         AuthService.login(creds, this.checkboxRef.checked)
             .catch(err => this.onError(err))
-            // todo remove later
-            .finally(() => setTimeout(() => this.setState({isLoading: false}), 1000));
+            // todo remove completely later
+            // .finally(() => setTimeout(() => this.setState({isLoading: false}), 1000));
 
         this.setState({isLoading: true});
     };

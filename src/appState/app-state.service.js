@@ -55,12 +55,14 @@ class AppStateService {
         } else if (typeof callback !== 'undefined') {
             throw TypeError('Callback is not a function.');
         }
-    }
+    };
 
 
     initAppState() {
-        this.mergeAppState({init: true});
+        this.mergeAppState();
         this.initAppState = null;
+
+        INIT_APP_STATE.debug && window.console.log('AppState: init');
     }
 }
 

@@ -4,9 +4,8 @@ import AppStateService      from '../appState/app-state.service.js';
 import getDisplayName       from '../appState/getDisplayName';
 
 
-const UnauthPage = (props) => (
-    <h2>Please <a className="link" onClick={props.handleClick}>Log In</a> to see this page</h2>
-);
+const UnauthPage = props =>
+    <h2>Please <small><a className="link" onClick={props.handleClick}>Log In</a></small> to see this page</h2>;
 
 
 export default function withAuth(WrappedComponent) {
@@ -20,7 +19,7 @@ export default function withAuth(WrappedComponent) {
 
             if (!AppStateService.appState.model.user) {
                 AppStateService.mergeAppState({
-                    view: { LoginPage: {returnUrl: this.props.location} }
+                    view: { LoginPage: {returnUrl: this.props.location.pathname} }
                 });
             }
         }

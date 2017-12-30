@@ -53,7 +53,7 @@ class AuthService {
             model:  {user}
         });
 
-        AppStateService.appHistory.push('/protected');
+        AppStateService.appHistory.push(AppStateService.appState.view.LoginPage.returnUrl || '/protected');
 
         keepLogged && window.localStorage.setItem('user', JSON.stringify(user));
         window.console.log('AuthService: successfully logged.');
@@ -65,7 +65,7 @@ class AuthService {
     _onError(error) {
         if (!error.response) {
             window.console.error(`AuthService: ${error.stack}`);
-            return error.message;
+            // return error.message;
         }
 
         AppStateService.mergeAppState({
@@ -80,7 +80,7 @@ class AuthService {
         let err = res.data.error;
 
         window.console.error(`AuthService: ${res.status} ${res.statusText} - ${err}`);
-        throw new Error(err);
+        // throw new Error(err);
     }
 
 }

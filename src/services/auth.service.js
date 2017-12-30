@@ -5,7 +5,7 @@
 
 import axios                from 'axios';
 
-import AppStateService      from './app-state.service.js';
+import AppStateService      from '../appState/app-state.service.js';
 import AppValues            from '../misc/app.values.js';
 
 

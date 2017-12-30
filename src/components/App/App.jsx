@@ -4,7 +4,7 @@ import {
 }                           from 'react-router-dom';
 import PropTypes 	        from 'prop-types';
 
-import AppStateService      from '../../services/app-state.service.js';
+import AppStateService      from '../../appState/app-state.service.js';
 import LoginContainer       from '../LoginPage/LoginContainer.jsx';
 // import PrivateRoute         from './PrivateRoute.jsx';
 import UsersPage            from '../LoginPage/UsersPage.jsx';

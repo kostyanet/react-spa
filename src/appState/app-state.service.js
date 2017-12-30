@@ -1,7 +1,7 @@
 import createBrowserHistory from 'history/createBrowserHistory'
 
 import INIT_APP_STATE       from './InitAppState.js';
-import Publisher            from '../misc/publisher.class.js';
+import Publisher            from './publisher.class.js';
 
 
 const history = createBrowserHistory();
@@ -13,6 +13,7 @@ class AppStateService {
         if (!AppStateService.instance) {
             this._state = INIT_APP_STATE;
             this._publisher = new Publisher();
+            this.mergeAppState = this.mergeAppState.bind(this);
 
             AppStateService.instance = this;
         }
@@ -30,7 +31,6 @@ class AppStateService {
 
 
     subscribe(cb) {
-        this._initAppState && setTimeout(() => this._initAppState());
         return this._publisher.subscribe(cb);
     }
 
@@ -48,7 +48,7 @@ class AppStateService {
         this._state = Object.assign({}, this._state, updater);
         this._publisher.deliver(this.appState);
 
-        window.console.log('AppState: ', JSON.stringify(this._state));
+        window.console.log('AppState: ', JSON.stringify(this._state, null, 2));
 
         if (typeof callback === 'function') {
             callback();
@@ -59,9 +59,9 @@ class AppStateService {
     }
 
 
-    _initAppState() {
-        this.mergeAppState({init: 'pass'});
-        this._initAppState = null;
+    initAppState() {
+        this.mergeAppState({init: true});
+        this.initAppState = null;
     }
 }
 

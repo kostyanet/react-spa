@@ -3,7 +3,7 @@ import {
     Redirect, Route, NavLink,
 }                           from 'react-router-dom';
 
-import AppStateService      from '../../services/app-state.service.js';
+import AppStateService      from '../../appState/app-state.service.js';
 
 export default class PrivateRoute extends Component {
     componentWillMount() { debugger

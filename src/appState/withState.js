@@ -1,5 +1,5 @@
 import React                from 'react';
-import AppStateService      from '../../services/app-state.service.js';
+import AppStateService      from './app-state.service.js';
 
 export default function withState(WrappedComponent) {
     class WithState extends React.Component {
@@ -9,8 +9,6 @@ export default function withState(WrappedComponent) {
 
             this.handleChange = this.handleChange.bind(this);
             this.state = AppStateService.appState;
-            window.console.log(AppStateService.mergeAppState);
-            this.setAppState = AppStateService.mergeAppState;
         }
 
 
@@ -30,12 +28,16 @@ export default function withState(WrappedComponent) {
 
 
         render() {
-            return <WrappedComponent
-                setAppState={this.setAppState} appState={this.state} {...this.props} />;
+            const props = Object.assign({}, this.props, {
+                appState: this.state,
+                setAppState: AppStateService.mergeAppState
+            });
+
+            return <WrappedComponent {...props} />;
         }
     }
 
-    WithState.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+    WithState.displayName = `WithState(${getDisplayName(WrappedComponent)})`;
 
     return WithState;
 }

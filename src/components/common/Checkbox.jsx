@@ -1,6 +1,6 @@
 import React 		from 'react';
-import classNames 	from 'classnames';
 import PropTypes 	from 'prop-types';
+
 
 const Checkbox = props =>
 
@@ -9,9 +9,11 @@ const Checkbox = props =>
         {props.text}
     </div>;
 
+
 Checkbox.propTypes = {
     text:    		PropTypes.string,
     checkboxRef: 	PropTypes.any
 };
+
 
 export default Checkbox;

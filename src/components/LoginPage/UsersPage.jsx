@@ -3,6 +3,7 @@ import PropTypes 	    from 'prop-types';
 
 import withState        from '../../appState/withState.js';
 
+
 class UsersPage extends React.Component {
 
     constructor(props) {
@@ -11,24 +12,28 @@ class UsersPage extends React.Component {
     }
 
 
-    handleClick(event) {
+    handleClick() {
         this.props.setAppState({});
     }
 
 
     render() {
-        window.console.log('UsersPage render')
+        this.props.appState.debug && window.console.log('UsersPage render');
+
         return (
             <div>
                 <button onClick={this.handleClick}>Click on</button>
-                <small style={{fontSize: '10px'}}><pre>{JSON.stringify(this.props, null, 2)}</pre></small>
+                <small><small><pre>{JSON.stringify(this.props, null, 2)}</pre></small></small>
             </div>
         );
     }
 }
 
+
 UsersPage.propTypes = {
+    appState: PropTypes.object,
     setAppState: PropTypes.func
 };
+
 
 export default withState(UsersPage)

@@ -1,8 +1,8 @@
 
-
 const INIT_APP_STATE = {
-    model:      null,
-    view:       null,
+    debug:      true,
+    model:      {},
+    view:       {},
 };
 
 export default INIT_APP_STATE;

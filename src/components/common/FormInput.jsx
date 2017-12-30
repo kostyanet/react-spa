@@ -2,6 +2,7 @@ import React 		from 'react';
 import classNames 	from 'classnames';
 import PropTypes 	from 'prop-types';
 
+
 const FormInput = props =>
 
     <label className={classNames('FormInput', {'error': props.message} )} >
@@ -14,6 +15,7 @@ const FormInput = props =>
 
     </label>;
 
+
 FormInput.propTypes = {
     handleChange:   PropTypes.func.isRequired,
     message: 		PropTypes.string,
@@ -23,11 +25,13 @@ FormInput.propTypes = {
     value: 			PropTypes.string.isRequired
 };
 
+
 FormInput.defaultProps = {
     message: 		'',
     placeholder: 	'',
     required: 		undefined,
     type: 			'text'
 };
+
 
 export default FormInput;

@@ -11,9 +11,8 @@ class AppStateService {
 
     constructor() {
         if (!AppStateService.instance) {
-            this._state = INIT_APP_STATE;
+            this._state = INIT_APP_STATE || {};
             this._publisher = new Publisher();
-            this.mergeAppState = this.mergeAppState.bind(this);
 
             AppStateService.instance = this;
         }
@@ -40,7 +39,7 @@ class AppStateService {
     }
 
 
-    mergeAppState(updater = {}, callback) {
+    mergeAppState = (updater = {}, callback) => {
         if (typeof updater !== 'object' && typeof updater !== 'function') {
             throw new TypeError('Unexpected type of partial state.');
         }
@@ -48,7 +47,7 @@ class AppStateService {
         this._state = Object.assign({}, this._state, updater);
         this._publisher.deliver(this.appState);
 
-        window.console.log('AppState: ', JSON.stringify(this._state, null, 2));
+        this._state.debug && window.console.log('AppState: ', JSON.stringify(this._state, null, 2));
 
         if (typeof callback === 'function') {
             callback();

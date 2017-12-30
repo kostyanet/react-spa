@@ -2,6 +2,7 @@ import React 		from 'react';
 import classNames 	from 'classnames';
 import PropTypes 	from 'prop-types';
 
+
 const Button = props =>
 
     <button className={classNames('Button', props.className )}
@@ -16,12 +17,14 @@ const Button = props =>
 
     </button>;
 
+
 Button.propTypes = {
     handleClick: 	PropTypes.func,
     title: 			PropTypes.string,
     className: 		PropTypes.string,
     disabled: 		PropTypes.any
 };
+
 
 Button.defaultProps = {
     title: 		'',

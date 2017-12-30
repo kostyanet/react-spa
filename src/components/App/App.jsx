@@ -8,6 +8,7 @@ import AppStateService      from '../../appState/app-state.service.js';
 import LoginContainer       from '../LoginPage/LoginContainer.jsx';
 // import PrivateRoute         from './PrivateRoute.jsx';
 import UsersPage            from '../LoginPage/UsersPage.jsx';
+import withAuth             from '../withAuth';
 
 const App = () => (
     <Router history={AppStateService.appHistory}>
@@ -17,7 +18,7 @@ const App = () => (
 
 
 const HomePage = (props) => <div>Home Page <br/>{JSON.stringify(props)}</div>;
-// const ProtectedPage = () => <div>Protected content</div>;
+const ProtectedPage = () => <div>Protected content</div>;
 const UsersMenu = () => <div>Users Menu</div>;
 
 const PrimaryLayout = (props) => (
@@ -38,6 +39,7 @@ const PrimaryLayout = (props) => (
             <Route path="/" exact component={HomePage}/>
             <Route path="/users" component={UsersPage}/>
             <Route path="/login" component={LoginContainer}/>
+            <Route path="/protected" component={withAuth(ProtectedPage)}/>
             {/*<PrivateRoute path="/protected" component={ProtectedPage}/>*/}
             {/*<Redirect to="/auth" />*/}
             {/*<LoginContainer {...props} />*/}

@@ -1,5 +1,8 @@
 import React                from 'react';
+
 import AppStateService      from './app-state.service.js';
+import getDisplayName       from './getDisplayName';
+
 
 export default function withState(WrappedComponent) {
     class WithState extends React.Component {
@@ -43,6 +46,4 @@ export default function withState(WrappedComponent) {
 }
 
 
-function getDisplayName(WrappedComponent) {
-    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
-}
+

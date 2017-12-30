@@ -1,10 +1,10 @@
-import React, {Component}   from 'react';
+import React                from 'react';
 
 import AuthService          from '../../services/auth.service.js';
 import LoginForm            from './LoginForm.jsx';
 
 
-class LoginContainer extends Component {
+class LoginContainer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -92,5 +92,6 @@ class LoginContainer extends Component {
             buttonProps={buttonProps} />
     }
 }
+
 
 export default LoginContainer;
